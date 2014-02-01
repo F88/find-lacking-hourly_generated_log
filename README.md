@@ -1,4 +1,3 @@
-
 Usage
 =====
 
@@ -17,8 +16,8 @@ Pattern string of Path to search
 
 "Filename Pattern" must be ...
 
- * [path-to-dir/]*yyyy*mm*dd*hh*
- * [path-to-dir/]*yyyy*mm*dd*
+ * `[path-to-dir/]*yyyy*mm*dd*hh*`
+ * `[path-to-dir/]*yyyy*mm*dd*`
 
 
 Args
