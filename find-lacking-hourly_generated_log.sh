@@ -63,7 +63,7 @@ function is_leapyear () {
   if [[ $(($1 % 4)) == 0 && $(($1 % 100)) != 0 ]] || [ $(($1 % 400)) == 0 ]; then return 0; else return 1; fi
 }
 
-nof0=0; nof1=0; declare -a not_stats;
+nof0=0; nof1=0; declare -a nof_stats;
 for yyyy in $(seq $y1 $y2); do
   for mm in $( seq $( test $y1 -eq $yyyy && echo $m1 || echo 1) $( test $y2 -eq $yyyy && echo $m2 || echo 12) ); do
     declare -ai nof_iam=()
