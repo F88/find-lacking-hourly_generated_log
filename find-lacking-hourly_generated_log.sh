@@ -5,6 +5,9 @@
 #   - [path-to-dir/]'*yyyy*mm*dd*hh*'
 #   - [path-to-dir/]'*yyyy*mm*dd*'
 
+# load file list from file
+_flist="${0%.sh}.cfg"
+
 # default pattern will help you
 declare -r default_basename_pattern="daily_rotated_file-yyyy_mm_dd-hh.log"
 
