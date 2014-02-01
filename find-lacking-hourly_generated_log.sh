@@ -2,14 +2,14 @@
 
 # support to
 # filename pattern must be ...
-#   - '*yyyy*mm*dd*hh*'
-#   - '*yyyy*mm*dd*'
+#   - [path-to-dir/]'*yyyy*mm*dd*hh*'
+#   - [path-to-dir/]'*yyyy*mm*dd*'
 
 # default pattern will help you
 declare -r default_basename_pattern="daily_rotated_file-yyyy_mm_dd-hh.log"
 
 # show usage
-[ "$1" = "-h" ] && echo "Usage : '$0' [-h] [-p Filename pattern] [yyyy] [mm] [yyyy] [mm]" && exit 0
+[ "$1" = "-h" ] && echo "Usage : '$0' [-h] [-p FilenamePattern] [yyyy] [mm] [yyyy] [mm]" && exit 0
 
 # pattern of path-to-files
 if [ "$1" = "-p" ]; then
