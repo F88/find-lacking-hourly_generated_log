@@ -19,7 +19,6 @@ Pattern string of Path to search
  * `[path-to-dir/]*yyyy*mm*dd*hh*`
  * `[path-to-dir/]*yyyy*mm*dd*`
 
-Only the first match each one is replaced with "year/month/day/hour"
 
 Args
 -----------
