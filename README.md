@@ -1,7 +1,7 @@
 Usage
 =====
 
-    Usage : '$0' [-h] [-p FilenamePattern] [yyyy] [mm] [yyyy] [mm]
+    find-lacking-hourly_generated_log.sh [-h] [-p FilenamePattern] [yyyy] [mm] [yyyy] [mm]
 
 Options
 -----------
