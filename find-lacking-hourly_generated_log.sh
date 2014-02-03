@@ -5,24 +5,26 @@
 #   - [path-to-dir/]'*yyyy*mm*dd*hh*'
 #   - [path-to-dir/]'*yyyy*mm*dd*'
 
-# load file list from file
-_flist="${0%.sh}.cfg"
-
 # default pattern will help you
 declare -r default_basename_pattern="daily_rotated_file-yyyy_mm_dd-hh.log"
+
+# load file list(log_file_list) from file
+# 'declare -ar log_file_list=(...)'
+_flist="${0%.sh}.cfg"
+[ -f "$_flist" -a -r "$_flist" ] && source "$_flist"
 
 # show usage
 [ "$1" = "-h" ] && echo "Usage : '$0' [-h] [-p FilenamePattern] [yyyy] [mm] [yyyy] [mm]" && exit 0
 
 # pattern of path-to-files
-if [ "$1" = "-p" ]; then
-  _basename_pattern="$(basename "$2")"
-  _dir="$(dirname "$2")"
-  shift 2
+if [ "$1" = "-p" ]; then { p2f="$2"; shift 2; }
+elif [ -n "$log_file_list" ];then
+  select p2f in "${log_file_list[@]}";do [ -n "$p2f" ] && break; done
 else
-  _basename_pattern="$(basename "${default_basename_pattern?"set default Filename pattern"}")"
-  _dir="$(dirname "$1")"
+  p2f="$(basename "${default_basename_pattern?"Default filename pattern not defined"}")"
 fi
+declare -r _dir="$(dirname "$p2f")"
+declare -r _basename_pattern="$(basename "$p2f")"
 [[ "$_basename_pattern" != *yyyy*mm*dd* ]] && echo "filename must be '*yyyy*mm*dd*" && exit 1
 
 # fix date range
@@ -81,12 +83,12 @@ for yyyy in $(seq $y1 $y2); do
       # log file created every hour
       if [[ "$_basename_pattern" == *hh* ]]; then
         for hh in $(seq 0 23); do
-          file_basename=$(eval printf "$_patternf" $yyyy $mm $dd $hh)
+          file_basename=$(printf "$_patternf" $yyyy $mm $dd $hh)
           eval ls -1d "$_dir/$file_basename" 2>&1 1>/dev/null && { let ++nof_iam[$dd]; let ++nof0; } || let ++nof1
         done
       # log file created every hour
       else
-        file_basename=$(eval printf "$_patternf" $yyyy $mm $dd) 
+        file_basename=$(printf "$_patternf" $yyyy $mm $dd) 
         eval ls -1d "$_dir/$file_basename" 2>&1 1>/dev/null && { let ++nof_iam[$dd]; let ++nof0; } || let ++nof1
       fi
     done
@@ -123,7 +125,7 @@ echo
 echo "# -- stats" 
 echo "[YYYY-MM]123456789X123456789X123456789X1"
 for s in "${nof_stats[@]}"; do
-  s="${s// 24/o}"
+  [[ "$_basename_pattern" == *hh* ]] && s="${s// 24/o}" || s="${s// 1/o}"
   s="${s// 0/-}"
   s="${s// [12][0-9]/x}"
   echo "${s// ?/x}"
